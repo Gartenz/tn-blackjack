@@ -1,12 +1,10 @@
-require_relative 'constants'
-
 class Card
   attr_reader :suit, :face, :value
 
-  def initialize(suit, face)
+  def initialize(suit, face, value)
     @suit = suit
     @face = face
-    @value = Constants::CARD_VALUES[face]
+    @value = value
   end
 
   def to_s
