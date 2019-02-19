@@ -1,0 +1,7 @@
+
+Metrics/LineLength:
+  Max: 90
+Metrics/MethodLength:
+  Max: 25
+Style/Documentation:
+  Enabled: false

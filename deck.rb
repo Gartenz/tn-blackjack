@@ -13,7 +13,7 @@ class Deck
     @cards.shuffle!
   end
 
-  def take_card
+  def give_card
     cards.shift
   end
 
