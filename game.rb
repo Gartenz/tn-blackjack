@@ -5,7 +5,7 @@ require_relative 'dealer'
 class Game
   attr_accessor :player, :dealer, :deck, :bank_money
 
-  INIT_MONEY = 50
+  INIT_MONEY = 100
   USER_ACTIONS = [].freeze
 
   def initialize
@@ -107,7 +107,7 @@ class Game
 
   def dealer_turn
     return if dealer.cards.count == 3 || dealer.ready?
-    
+
     if dealer.cards_score >= 17
       dealer.ready = true
       return
