@@ -10,5 +10,4 @@ class Card
   def to_s
     "#{face}#{suit}"
   end
-
 end
