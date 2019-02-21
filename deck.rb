@@ -1,9 +1,10 @@
 require_relative 'card'
 
 class Deck
-  CARD_SUITS = ['♣', '♥', '♦', '♠'].freeze
-  CARD_VALUES = { 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9,
-                  10 => 10, 'J' => 10, 'Q' => 10, 'K' => 10, 'A' => 11 }.freeze
+  class DeckEmptyError < StandardError; end
+  CARD_SUITS = %w[♣ ♥ ♦ ♠].freeze
+  CARD_VALUES = { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
+                  '10': 10, 'J': 10, 'Q': 10, 'K': 10, 'A': 11 }.freeze
 
   def initialize
     @cards = []
@@ -14,6 +15,7 @@ class Deck
   end
 
   def give_card
+    raise DeckEmptyError if count.zero?
     cards.shift
   end
 
