@@ -2,13 +2,14 @@ require_relative 'deck'
 require_relative 'player'
 require_relative 'dealer'
 require_relative 'interface'
+require_relative 'bank'
 
 class Game
-  attr_accessor :player, :dealer, :deck, :bank_money
+  attr_accessor :player, :dealer, :deck
 
   private
 
-  attr_reader :interface
+  attr_reader :interface, :bank
 
   public
 
@@ -16,7 +17,7 @@ class Game
 
   def initialize
     @dealer = Dealer.new('Dealer', INIT_MONEY)
-    @bank_money = 0
+    @bank = Bank.new
     @interface = GameInterface.new
     @player = interface.create_player
   end
@@ -26,11 +27,8 @@ class Game
       player.money = INIT_MONEY
       dealer.money = INIT_MONEY
       interface.start_game
-      @deck = Deck.new 
-      while player.money > 0 && dealer.money > 0
-        self.bank_money = 0
-        start_round
-      end
+      @deck = Deck.new
+      start_round while player.money > 0 && dealer.money > 0
       interface.show_result(dealer, player)
       break unless continue?
     end
@@ -47,11 +45,11 @@ class Game
     dealer.ready = false
     skipped_rounds = 0
     deal_cards
-    bank_bet(10)
+    bank.bet(10, dealer, player)
     loop do
       break if player.cards.count >= 3 && (dealer.cards.count >= 3 || dealer.ready?)
 
-      interface.round_info(bank_money, dealer, player)
+      interface.round_info(bank.money, dealer, player)
       choise = interface.user_choise(skipped_rounds, player)
       player.take_card(deck.give_card) if choise == 2 && player.cards.count < 3
       skipped_rounds += 1 if choise == 1
@@ -60,7 +58,7 @@ class Game
       dealer_turn
     end
     open_cards
-  rescue Deck::DeckEmptyError => e
+  rescue Deck::DeckEmptyError
     interface.open_deck
     @deck = Deck.new
     retry
@@ -68,14 +66,13 @@ class Game
 
   def open_cards
     interface.open_cards(dealer, player)
-    winner = check_result(dealer, player)
+    winner = check_result
     if winner
-      interface.show_winner(bank_money, winner)
-      winner.money += bank_money
+      interface.show_winner(bank.money, winner)
+      bank.withdraw(winner)
     else
       interface.show_draw
-      dealer.money += bank_money / 2
-      player.money += bank_money / 2
+      bank.withdraw(dealer, player)
       return
     end
   end
@@ -108,11 +105,5 @@ class Game
       player.take_card(deck.give_card)
       dealer.take_card(deck.give_card)
     end
-  end
-
-  def bank_bet(bet)
-    self.bank_money += 2 * bet
-    dealer.money -= bet
-    player.money -= bet
   end
 end
