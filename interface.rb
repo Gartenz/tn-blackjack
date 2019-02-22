@@ -12,7 +12,7 @@ class GameInterface
   end
 
   def open_deck
-    puts "Кончились карты! Раунд прекращен, открытие новой колоды..."
+    puts 'Кончились карты! Раунд прекращен, открытие новой колоды...'
   end
 
   def round_info(bank_money, dealer, player)

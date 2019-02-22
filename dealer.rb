@@ -5,9 +5,7 @@ class Dealer < Person
   attr_accessor :ready
 
   def show_cards_hidden
-    str = ''
-    cards.count.times { str += '* ' }
-    'Карты Дилера:' << str.chomp
+    "Карты Дилера: #{'* ' * cards.count}"
   end
 
   def ready?
