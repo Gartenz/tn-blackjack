@@ -19,7 +19,7 @@ class GameInterface
     puts "Банк: #{bank_money}"
     puts dealer.show_cards_hidden
     puts "Деньги Дилера: #{dealer.money}"
-    puts "У вас сейчас  очков: #{player.cards_score}"
+    puts "У вас сейчас  очков: #{player.score}"
     puts "Карты: #{player.show_cards}"
     puts "Ваши деньги: #{player.money}"
   end
@@ -42,7 +42,7 @@ class GameInterface
     puts '--------Открытие карт---------'
     players.each do |player|
       puts "Карты у #{player.name}: #{player.show_cards}"
-      puts "Очки #{player.name}: #{player.cards_score}"
+      puts "Очки #{player.name}: #{player.score}"
     end
   end
 

@@ -14,19 +14,20 @@ class Person
     cards << card
   end
 
-  def cards_score
+  def score
     value = 0
     cards.each do |card|
-      value += 1 if card.face == 'A' && value > 11
-      value += card.value
+      value += if card.face == 'A' && value > 11
+                 1
+               else
+                 card.value
+               end
     end
     value
   end
 
   def show_cards
-    str = ''
-    cards.each { |card| str += "#{card} " }
-    str.chomp
+    cards.join(' ')
   end
 
   def drop_cards

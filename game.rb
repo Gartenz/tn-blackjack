@@ -80,18 +80,19 @@ class Game
     end
   end
 
-  def check_result(dealer, player)
-    dealer_score = dealer.cards_score
-    player_score = player.cards_score
-    return nil if dealer_score == player_score || (player_score > 21 && dealer_score > 21)
+  def check_result
+    dealer_score = dealer.score
+    player_score = player.score
     return dealer if player_score > 21 || (dealer_score > player_score && dealer_score <= 21)
     return player if dealer_score > 21 || (dealer_score < player_score && player_score <= 21)
+
+    nil
   end
 
   def dealer_turn
     return if dealer.cards.count == 3 || dealer.ready?
 
-    if dealer.cards_score >= 17
+    if dealer.score >= 17
       dealer.ready = true
       return
     end
