@@ -1,12 +1,6 @@
 class Bank
   attr_reader :money
 
-  private
-
-  attr_writer :money
-
-  public
-
   def initialize
     @money = 0
   end
@@ -22,4 +16,8 @@ class Bank
     players.each { |player| player.money += money / players.count }
     self.money = 0
   end
+
+  private
+
+  attr_writer :money
 end

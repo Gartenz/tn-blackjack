@@ -1,4 +1,3 @@
-require_relative 'card'
 require_relative 'person'
 
 class Dealer < Person

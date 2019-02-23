@@ -1,6 +1,9 @@
 require_relative 'card'
+require_relative 'game_rules'
 
 class Person
+  include GameRules
+
   attr_accessor :money
   attr_reader :name, :cards
 
@@ -16,12 +19,15 @@ class Person
 
   def score
     value = 0
+    aces_count = 0
     cards.each do |card|
-      value += if card.face == 'A' && value > 11
-                 1
-               else
-                 card.value
-               end
+      value += card.cost
+      aces_count += 1 if card.ace?
+    end
+    aces_count.times do
+      break if value <= BLACKJACK
+
+      value -= 10 if value > BLACKJACK
     end
     value
   end

@@ -1,6 +1,4 @@
-require_relative 'player'
-require_relative 'dealer'
-require_relative 'game'
+require_relative 'game_rules'
 
 class GameInterface
   def start_round
@@ -26,14 +24,13 @@ class GameInterface
 
   def create_player
     puts 'Как зовут Игрока?'
-    player_name = gets.chomp
-    Player.new(player_name, Game::INIT_MONEY)
+    gets.chomp
   end
 
   def user_choise(skipped_rounds, player)
     puts 'Ваши действия:'
     puts '1.Пропустить ход' if skipped_rounds.zero?
-    puts '2.Добавить карту' if player.cards.count < 3
+    puts '2.Добавить карту' if player.cards.count < GameRules::MAX_CARDS
     puts '3.Открыть карты'
     gets.chomp.to_i
   end

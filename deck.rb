@@ -2,14 +2,13 @@ require_relative 'card'
 
 class Deck
   class DeckEmptyError < StandardError; end
-  SUITS = %w[♣ ♥ ♦ ♠].freeze
-  CARDS = { '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8,
-            '9' => 9, '10' => 10, 'J' => 10, 'Q' => 10, 'K' => 10, 'A' => 11 }.freeze
+
+  CARDS = %w[2 3 4 5 6 7 8 9 10 J Q K A].freeze
 
   def initialize
     @cards = []
-    SUITS.each do |suit|
-      CARDS.each { |face, value| @cards << Card.new(suit, face, value) }
+    Card::SUITS.each do |suit|
+      CARDS.each { |face| @cards << Card.new(suit, face) }
     end
     @cards.shuffle!
   end

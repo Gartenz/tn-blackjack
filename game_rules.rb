@@ -1,0 +1,7 @@
+module GameRules
+  INIT_MONEY = 100
+  DEFAULT_BET = 10
+  MAX_CARDS = 3
+  BLACKJACK = 21
+  DEALER_DUMMY_SCORE = 17
+end
